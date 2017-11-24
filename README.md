@@ -83,51 +83,62 @@ $ git submodule add https://github.com/YuriFox/YFKeychainAccess.git
 
 ## Usage
 
-In your project AppDelegate.swift:
-
 ```swift
 import YFKeychainAccess
+```
+### Set(Update)
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+```swift
+let keychain = YFKeychainAccess() // You can add 'keyPrefix' and 'options' to customize KeychainAccess
 
-    ...
-    
-    func setVolumeIndicator() {
-        
-        let volumeIndicator = YFVolumeView.current
-        volumeIndicator.isActive = true // Make active YFVolumeView and hide native HUD
-        volumeIndicator.backgroundColor = .white // Set custom background color
-        volumeIndicator.isAnimatingEnable = true // Change animation enable 
+do {
+    try keychain.set(value, forKey: "KEY") // You can add 'accessible' parameter too
+    // 'set' function update item or creates a new one
+} catch {
+    // Handle error if necessary
+}
+```
 
-//        if let window = self.window {
-//            volumeIndicator.setBackgroundColorAsWindowWithRootNavigationBar(window: window)
-//            // If AppDelegate.window.rootViewController is UINavigationController, volume indicator color will be as UINavigationController.navigationBar.barTintColor
-//        }
+### Get
 
+```swift
+let keychain = YFKeychainAccess() // You can add 'keyPrefix' and 'options' to customize KeychainAccess
 
-    }
+do {
+    let data = try keychain.data(forKey: "DATA_KEY")
+    let string = try keychain.string(forKey: "STRING_KEY")
+    let bool = try keychain.bool(forKey: "BOOL_KEY")
+    let int = try keychain.(forKey: "INT_KEY")
+    let float = try keychain.float(forKey: "FLOAT_KEY")
+    let double = try keychain.double(forKey: "DOUBLE_KEY")
+} catch {
+    // Handle error if necessary
+}
+```
 
-    ...
+### Delete
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+```swift
+let keychain = YFKeychainAccess() // You can add 'keyPrefix' and 'options' to customize KeychainAccess
 
-        ...
-        
-        self.setVolumeIndicator()
-        
-        ...
+do {
+    try keychin.delete(forKey: "KEY") // Delete one item for key
+    try keychin.deleteAll() // Delete all item for this app
+} catch {
+    // Handle error if necessary
+}
+```
 
-    }
+### Contains
 
-    ...
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        YFVolumeView.current.updateActiveState() // FIX.
-    }
+```swift
+let keychain = YFKeychainAccess() // You can add 'keyPrefix' and 'options' to customize KeychainAccess
 
-...
-
+do {
+    try keychin.contains(forKey: "KEY")
+} catch {
+    // Handle error if necessary
 }
 
 ```
+

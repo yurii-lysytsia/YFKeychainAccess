@@ -1,10 +1,9 @@
 Pod::Spec.new do |s|
 
   s.name = "YFKeychainAccess"
-  s.version = "1.0.0"
-  s.summary      = "Convenient, beautiful and easy to use KeychainAccess, that written in Swift"
+  s.version = "1.0"
 
-  s.description  = "Convenient, beautiful and easy to use KeychainAccess, that written in Swift"
+  s.summary      = "Convenient, beautiful and easy to use KeychainAccess, that written in Swift"
 
   s.homepage     = "https://github.com/YuriFox/YFKeychainAccess"
   
@@ -19,6 +18,9 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
 
   s.source       = { :git => "https://github.com/YuriFox/YFKeychainAccess.git", :tag => "#{s.version}" }
-  s.source_files = "Source/*.swift"
+  # s.source_files = "Source/*.swift"
+  s.ios.vendored_frameworks = 'Framework/YFKeychainAccess.framework'
+
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
 
 end

@@ -1,17 +1,29 @@
 # YFKeychainAccess
 
+[![platform](https://img.shields.io/badge/platform-iOS-lightgray.svg)]()
+[![license](https://img.shields.io/badge/license-MIT-lightgray.svg)]()
+
 Convenient, beautiful and easy to use KeychainAccess, that written in Swift
 
 - [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
 
+- [Installation](#installation)
+    - [CocoaPods](#CocoaPods)
+    - [Manually](#Manually)
+    
+- [Usage](#usage)
+    - [Set](#Set)
+    - [Get](#Get)
+    - [Delete](#Delete)
+    - [Contains](#Contains)
+    
+- [License](#license)
 
 ## Requirements
 
 - iOS 8.0+
-- Xcode 8.1+
-- Swift 3.0+
+- Xcode 8.3+
+- Swift 3.1+
 
 ## Installation
 ### CocoaPods
@@ -40,7 +52,7 @@ $ pod init
 $ open Podfile
 ```
 
-- Then, in the `Podfile` that appears, specify. Instead of `<Your Target Name>`, enter your project's name :
+- In the `Podfile` that appears, specify. Instead of `<Your Target Name>`, enter your project's name :
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
@@ -48,15 +60,17 @@ platform :ios, ‘8.0’
 use_frameworks!
 
 target '<Your Target Name>' do
-	pod 'YFVolumeView'
+	pod 'YFKeychainAccess'
 end
 ```
 
-- Finally, run the following command:
+- Then, run the following command:
 
 ```bash
 $ pod install
 ```
+
+- Finally, open your Xcode  `<Your Target Name>.xcworkspace`.
 
 ### Manually
 #### Embedded Framework
@@ -86,7 +100,7 @@ $ git submodule add https://github.com/YuriFox/YFKeychainAccess.git
 ```swift
 import YFKeychainAccess
 ```
-### Set(Update)
+### Set
 
 ```swift
 let keychain = YFKeychainAccess() // You can add 'keyPrefix' and 'options' to customize KeychainAccess
@@ -142,3 +156,5 @@ do {
 
 ```
 
+## License
+Released under the MIT license. See [LICENSE](https://github.com/YuriFox/YFKeychainAccess/blob/1.0/LICENSE) for details.

@@ -1,0 +1,11 @@
+framework module YFKeychainAccess {
+  umbrella header "YFKeychainAccess.h"
+
+  export *
+  module * { export * }
+}
+
+module YFKeychainAccess.Swift {
+    header "YFKeychainAccess-Swift.h"
+    requires objc
+}

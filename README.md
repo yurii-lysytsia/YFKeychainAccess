@@ -34,19 +34,13 @@ Convenient, beautiful and easy to use KeychainAccess, that written in Swift
 $ gem install cocoapods
 ```
 
-> CocoaPods 1.1.0+ is required to build.
-
-To integrate YFVolumeView into your Xcode project using CocoaPods, create `Podfile`.
-
-- Open up Terminal, `cd` into your top-level project directory
-
-- Run the following command in your top-level folder of your project:
+- Create `Podfile` into your Xcode project. Open up `Terminal` → `cd` into your project's top-level directory → Run the following command:
 
 ```bash
 $ pod init
 ```
 
-- Open created  `Podfile`
+- Open up created  `Podfile`.
 
 ```bash
 $ open Podfile
@@ -75,26 +69,38 @@ $ pod install
 ### Manually
 #### Embedded Framework
 
-- Open up Terminal, `cd` into your top-level project directory, and run the following command "if" your project is not initialized as a git repository:
+- Download `YFKeychainAccess`. Open `Terminal` → `cd` into some directory
+
+- If your project isn't initialized as a git repository run the following command:
 
 ```bash
 $ git init
 ```
 
-- Add a git submodule by running the following command:
+- Add a git submodule to this directory by running the following command:
 
 ```bash
 $ git submodule add https://github.com/YuriFox/YFKeychainAccess.git
 ```
 
-- Open your Xcode project, select your application project in the Project Navigator (blue project icon) to navigate to the target configuration window and select the application target under the `Targets` heading in the sidebar.
+-  Open your Xcode project → Select the `Project` → Choose your Project's `Target` → Open `General` panel → Click on the `+` button under the `Embedded Binaries` section → Select `Add Other...` → Select `YFKeychainAccess.framework` from `YFKeychainAccess` submodule. Check `Copy items if needed`
 
-- In the tab bar at the top of that window, open the `General` panel
+- Before building and distributing your application, you need to remove the unused architecture. Because Apple doesn't allow the application with unused architectures to the App Store. For this you have to add the run script to your app. Select the `Project` → Choose your Project's `Target` → Select `Build Phases` → Click on the `+` → New Run Script Phase. You can add the name for this script like as `Remove Unused Architectures Script`
 
-- Click on the `+` button under the `Embedded Binaries` section and select `Add Other...`
-
-- Select `YFKeychainAccess.framework`. Check `Copy items if needed`
-
+```bin/sh
+FRAMEWORK="BetterHQ"
+FRAMEWORK_EXECUTABLE_PATH="${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/$FRAMEWORK.framework/$FRAMEWORK"
+EXTRACTED_ARCHS=()
+for ARCH in $ARCHS
+do
+lipo -extract "$ARCH" "$FRAMEWORK_EXECUTABLE_PATH" -o "$FRAMEWORK_EXECUTABLE_PATH-$ARCH"
+EXTRACTED_ARCHS+=("$FRAMEWORK_EXECUTABLE_PATH-$ARCH")
+done
+lipo -o "$FRAMEWORK_EXECUTABLE_PATH-merged" -create "${EXTRACTED_ARCHS[@]}"
+rm "${EXTRACTED_ARCHS[@]}"
+rm "$FRAMEWORK_EXECUTABLE_PATH"
+mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH"
+```
 ## Usage
 
 ```swift
@@ -153,7 +159,6 @@ do {
 } catch {
     // Handle error if necessary
 }
-
 ```
 
 ## License

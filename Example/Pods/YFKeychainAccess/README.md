@@ -1,8 +1,6 @@
 # YFKeychainAccess
 
-[![platform](https://img.shields.io/badge/Platform-iOS%208%2B-blue.svg)]()
-[![language](https://img.shields.io/badge/Language-Swift-red.svg)]()
-[![language](https://img.shields.io/badge/pod-4.0.0-blue.svg)]()
+[![platform](https://img.shields.io/badge/platform-iOS-lightgray.svg)]()
 [![license](https://img.shields.io/badge/license-MIT-lightgray.svg)]()
 
 Convenient, beautiful and easy to use KeychainAccess, that written in Swift
@@ -24,8 +22,8 @@ Convenient, beautiful and easy to use KeychainAccess, that written in Swift
 ## Requirements
 
 - iOS 8.0+
-- Xcode 9.0+
-- Swift 4.0+
+- Xcode 8.3+
+- Swift 3.1+
 
 ## Installation
 ### CocoaPods
@@ -51,10 +49,11 @@ $ open Podfile
 - In the `Podfile` that appears, specify. Instead of `<Your Target Name>`, enter your project's name :
 
 ```ruby
+source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, ‘8.0’
+use_frameworks!
 
 target '<Your Target Name>' do
-    use_frameworks!
 	pod 'YFKeychainAccess'
 end
 ```
@@ -62,12 +61,46 @@ end
 - Then, run the following command:
 
 ```bash
-$ pod update
 $ pod install
 ```
 
 - Finally, open your Xcode  `<Your Target Name>.xcworkspace`.
 
+### Manually
+#### Embedded Framework
+
+- Download `YFKeychainAccess`. Open `Terminal` → `cd` into some directory
+
+- If your project isn't initialized as a git repository run the following command:
+
+```bash
+$ git init
+```
+
+- Add a git submodule to this directory by running the following command:
+
+```bash
+$ git submodule add https://github.com/YuriFox/YFKeychainAccess.git
+```
+
+-  Open your Xcode project → Select the `Project` → Choose your Project's `Target` → Open `General` panel → Click on the `+` button under the `Embedded Binaries` section → Select `Add Other...` → Select `YFKeychainAccess.framework` from `YFKeychainAccess` submodule. Check `Copy items if needed`
+
+- Before building and distributing your application, you need to remove the unused architecture. Because Apple doesn't allow the application with unused architectures to the App Store. For this you have to add the run script to your app. Select the `Project` → Choose your Project's `Target` → Select `Build Phases` → Click on the `+` → New Run Script Phase. You can add the name for this script like as `Remove Unused Architectures Script`
+
+```bin/sh
+FRAMEWORK="BetterHQ"
+FRAMEWORK_EXECUTABLE_PATH="${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/$FRAMEWORK.framework/$FRAMEWORK"
+EXTRACTED_ARCHS=()
+for ARCH in $ARCHS
+do
+lipo -extract "$ARCH" "$FRAMEWORK_EXECUTABLE_PATH" -o "$FRAMEWORK_EXECUTABLE_PATH-$ARCH"
+EXTRACTED_ARCHS+=("$FRAMEWORK_EXECUTABLE_PATH-$ARCH")
+done
+lipo -o "$FRAMEWORK_EXECUTABLE_PATH-merged" -create "${EXTRACTED_ARCHS[@]}"
+rm "${EXTRACTED_ARCHS[@]}"
+rm "$FRAMEWORK_EXECUTABLE_PATH"
+mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH"
+```
 ## Usage
 
 ```swift

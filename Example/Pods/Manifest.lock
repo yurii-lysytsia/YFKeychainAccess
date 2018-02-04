@@ -1,0 +1,12 @@
+PODS:
+  - YFKeychainAccess (1.0)
+
+DEPENDENCIES:
+  - YFKeychainAccess
+
+SPEC CHECKSUMS:
+  YFKeychainAccess: aa32497b02c682fddaf17f99a06cf2a2188c8052
+
+PODFILE CHECKSUM: 0bb556f642fea8bfd701408f77a19fb3440677b5
+
+COCOAPODS: 1.3.1
